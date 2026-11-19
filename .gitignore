@@ -8,4 +8,5 @@ scripts/.tmp-*.cjs
 .env
 .env.local
 .tmp
+.tmp-*
 scripts/.tmp-*.cjs
