@@ -1,0 +1,11 @@
+node_modules
+dist
+dist-ssr
+.shots
+scripts/.tmp-*.cjs
+.DS_Store
+*.local
+.env
+.env.local
+.tmp
+scripts/.tmp-*.cjs
