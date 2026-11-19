@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #0e2136;
+  --gold: #a98753;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-paper text-ink font-sans antialiased;
+  min-height: 100vh;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: #ddc9a6;
+  color: #0e2136;
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-[560px] px-4 md:max-w-[1180px] md:px-6;
+  }
+
+  .card {
+    @apply rounded-2xl border border-line bg-card shadow-card;
+  }
+
+  .hairline {
+    @apply border-line;
+  }
+
+  .serif {
+    @apply font-serif;
+  }
+
+  .eyebrow {
+    @apply text-[10px] font-semibold uppercase tracking-[0.22em] text-slate;
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+    @apply font-mono;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition active:scale-[0.98];
+  }
+
+  .btn-primary {
+    @apply btn bg-ink text-white hover:bg-ink2;
+  }
+
+  .btn-ghost {
+    @apply btn border border-line bg-white text-ink hover:border-ink/30;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-line bg-white/70 px-2.5 py-1 text-[11px] text-slate;
+  }
+
+  .kpi-label {
+    @apply text-[11px] tracking-wide text-slate;
+  }
+
+  .link-underline {
+    @apply underline decoration-goldSoft decoration-2 underline-offset-4;
+  }
+
+  .prose-macro p {
+    @apply text-[15px] leading-[1.85] text-ink/85;
+  }
+
+  .prose-macro strong {
+    @apply font-semibold text-ink;
+  }
+}
+
+/* KaTeX 尺寸微调：手机端公式不溢出 */
+.katex-display {
+  margin: 0.6rem 0 !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 0;
+}
+.katex {
+  font-size: 1.02em;
+}
+
+/* 隐藏滚动条但保留滚动 */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* 图表 tooltip */
+.recharts-default-tooltip {
+  border-radius: 10px !important;
+  border: 1px solid #e2ddd3 !important;
+  box-shadow: 0 8px 24px -16px rgba(14, 33, 54, 0.4) !important;
+  font-size: 12px !important;
+}
