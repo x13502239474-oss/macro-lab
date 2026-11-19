@@ -73,9 +73,28 @@ node scripts/.tmp-validate.cjs
 基线数据（扩充前）：72 课 / 300 题 / 30 图 / 10 案例 / 23 节点。
 扩充后题量应逐批上升，**最终目标 ≥ 72×5 = 360 题**。
 
-## 四、图表待补清单（第二阶段）
+## 四、图表补齐情况（已完成）
 
-现有 30 张图已覆盖主要模型。用户要求强化以下图形，若缺失需新增 `charts.ts` 条目：
-GDP 核算表（已有表格形式）、CPI 计算过程、名义与实际 GDP 对比（有 `real-nominal-demo`）、
-可贷资金市场、货币供给与需求、AD-AS（有 `adas-static`）、财政政策冲击、
-货币政策传导、汇率变化机制（有 fx 相关）。
+用户点名要求的图形已全部补齐，图表总数 **30 → 44**（新增 14 张）：
+
+| 用户点名的图 | 对应 id |
+|---|---|
+| 货币供给与货币需求 | `money-market-demo` |
+| 可贷资金市场 / 财政政策冲击 | `loanable-funds-demo`、`fiscal-balance-demo` |
+| 货币政策传导 | `rate-corridor-demo`、`fed-bs`、`cn-m2-tsf` |
+| 政策时滞 | `policy-lag-demo` |
+| 汇率变化机制 | `cn-openness`、`cn-fx-reserves`、`cn-bop`、`real-fx-demo`、`bigmac-demo` |
+| 开放经济与贸易 | `us-trade-balance`、`small-open-demo` |
+
+原有图形（GDP 核算 `cn-expenditure`、CPI `cpi-basket` / `gdp-deflator-cn`、名义实际对比 `real-nominal-demo`、AD-AS `adas-static` 等）保持不变。
+
+修正记录：`debt-dynamics` 数据改为严格按 `bₜ₊₁=(1+r−g)/(1+g)·bₜ+赤字率` 递推；`cn-unemp` 参考线由 `y=5` 却标注 5.5% 改为 `y=5.5`；`small-open-demo` 参考线改为数值横轴 + 垂直虚线（r*=4%），读图五问文案同步改正。
+
+## 五、部署记录（2026-11-19 完成）
+
+- 线上：https://x13502239474-oss.github.io/macro-lab/ （Pages，`build_type=workflow`，push 到 main 自动触发 Actions）
+- 本次推送：commit `433bf8c5`，tree `456ee35` 与本地 HEAD 完全一致；Actions run `44540770247` → `completed / success`
+- 线上验证：HTTP 200；实时构建包内含 `small-open-demo`、`money-market-demo`、`loanable-funds-demo`、`鲍莫尔`、`巨无霸指数` 等新版标记，确认非旧缓存
+- **推送一律用 `node scripts/gh-push.cjs`（REST API 压缩提交），不要用 `git push`**：远端 main 由压缩提交维护，本地 5 个提交的历史与远端不同步；`git push` 会因无关历史分叉被拒，强行 `merge --allow-unrelated-histories` 会产生全文件 add/add 冲突（本次踩过，已 `git merge --abort` 回退）。
+- **token 坑**：`GH_TOKEN` 必须核对拼写。错一个字符会返回 401，脚本报失败但容易误判成"远端没变"。推送前先 `curl -o /dev/null -w "%{http_code}"` 验证仓库访问为 200。
+- LocalStorage 学习记录未触碰：全程未改 `lesson.id` 与已有 `quiz.id`。
